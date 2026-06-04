@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PACE: Temporal-Role Tactile Conditioning for Chunk-Based Insertion Policies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #3B7DD8;
+      --red: #D32F2F;
+      --gray: #78909C;
+      --green: #43A047;
+      --bg: #FAFAFA;
+      --card-bg: #FFFFFF;
+      --text: #1F2937;
+      --text-dim: #6B7280;
+      --border: #E5E7EB;
+      --max-w: 900px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    section { padding: 40px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 56px 0 40px; background: linear-gradient(180deg, #EBF4FF 0%, var(--bg) 100%); }
+    .hero .venue { display: inline-block; background: var(--blue); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .hero h1 { font-size: 28px; font-weight: 700; line-height: 1.3; max-width: 780px; margin: 0 auto 8px; }
+    .hero .subtitle { font-size: 15px; color: var(--text-dim); max-width: 700px; margin: 0 auto 20px; }
+    .authors { font-size: 14px; margin-bottom: 6px; text-align: center; }
+    .authors a { color: var(--text); text-decoration: none; }
+    .authors a:hover { color: var(--blue); }
+    .affiliations { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; text-align: center; }
+
+    /* BUTTONS */
+    .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; border: 1.5px solid var(--border); color: var(--text); background: var(--card-bg); transition: all 0.15s; }
+    .btn:hover { border-color: var(--blue); color: var(--blue); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* TEASER */
+    .teaser { max-width: 820px; margin: 0 auto; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #F3F4F6; position: relative; min-height: 200px; }
+    .teaser::before { content: ""; position: absolute; top: 50%; left: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; z-index: 0; }
+    .teaser img, .teaser video { width: 100%; display: block; position: relative; z-index: 1; }
+    .placeholder { background: #F3F4F6; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 14px; min-height: 300px; border-radius: 8px; border: 2px dashed var(--border); }
+
+    /* SECTIONS */
+    h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+    h3 { font-size: 17px; font-weight: 600; margin: 24px 0 10px; }
+    p { margin-bottom: 14px; text-align: justify; }
+    .abstract-text { font-size: 14.5px; line-height: 1.7; color: #374151; text-align: justify; }
+
+    /* METHOD FIGURE */
+    .method-fig { margin: 20px auto; max-width: 100%; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; background: #F3F4F6; position: relative; min-height: 200px; }
+    .method-fig::before { content: ""; position: absolute; top: 50%; left: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; z-index: 0; }
+    .method-fig img { width: 100%; display: block; position: relative; z-index: 1; }
+    .fig-caption { font-size: 12.5px; color: var(--text-dim); text-align: center; padding: 10px 16px; background: #F9FAFB; border-top: 1px solid var(--border); }
+
+    /* THREE PILLARS */
+    .pillars { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .pillar { padding: 16px; border-radius: 10px; border: 1.5px solid; }
+    .pillar.phase { border-color: var(--blue); background: #EBF4FF; }
+    .pillar.event { border-color: var(--red); background: #FFF5F5; }
+    .pillar.aux   { border-color: var(--gray); background: #F0F4F8; }
+    .pillar h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .pillar.phase h4 { color: var(--blue); }
+    .pillar.event h4 { color: var(--red); }
+    .pillar.aux h4   { color: var(--gray); }
+    .pillar p { font-size: 12.5px; color: #4B5563; margin: 0; line-height: 1.55; }
+
+    /* VIDEO GRID */
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .video-grid.single { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+    .video-card { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: #F3F4F6; position: relative; min-height: 120px; }
+    .video-card::before { content: ""; position: absolute; top: 50%; left: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; z-index: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .video-card video { width: 100%; display: block; position: relative; z-index: 1; }
+    .video-card .caption { padding: 8px 12px; font-size: 12.5px; font-weight: 500; text-align: center; color: var(--text-dim); border-top: 1px solid var(--border); }
+
+    /* BIBTEX */
+    .bibtex-block { background: #1F2937; color: #D1D5DB; padding: 16px 20px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; overflow-x: auto; position: relative; }
+    .bibtex-block .copy-btn { position: absolute; top: 8px; right: 8px; background: #374151; color: #D1D5DB; border: none; padding: 4px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+    .bibtex-block .copy-btn:hover { background: #4B5563; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 30px 0; font-size: 12px; color: var(--text-dim); border-top: 1px solid var(--border); }
+    footer a { color: var(--text-dim); }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 22px; }
+      .pillars { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <span class="venue">CoRL 2026</span>
+    <h1>PACE: Temporal-Role Tactile Conditioning for Chunk-Based Insertion Policies</h1>
+
+    <p class="authors">
+      <a href="#">Anonymous</a>
+    </p>
+    <p class="affiliations">Anonymous Institution</p>
+
+    <div class="btn-row">
+      <a class="btn" href="#" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Paper
+      </a>
+      <a class="btn" href="#" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        arXiv
+      </a>
+      <a class="btn" href="#" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        Code (coming soon)
+      </a>
+    </div>
+
+    <!-- Teaser figure -->
+    <div class="teaser">
+      <img src="static/images/teaser.png" alt="PACE concept overview" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABSTRACT ============ -->
+<section>
+  <div class="container">
+    <h2>Abstract</h2>
+    <p class="abstract-text">
+      Contact-rich insertion requires robots to combine visual alignment with tactile adjustment. However, existing visuotactile chunk-based policies collapse tactile feedback into a single generation-time fusion pathway, leaving persistent contact states, abrupt contact events, and future contact consequences implicitly modeled in a single representation.
+    </p>
+    <p class="abstract-text">
+      We present <strong>PACE</strong> (Phase-Aware Contact-Event Conditioning), a temporal-role tactile conditioning framework for chunk-based insertion policies. PACE organizes a shared tactile stream into three temporal roles: persistent contact states condition action-chunk generation, abrupt contact events correct the generated chunk, and contact-consequence prediction shapes action representations during training. This design preserves chunk-level action continuity while assigning distinct pathways to different temporal roles of contact feedback.
+    </p>
+    <p class="abstract-text">
+      Across five real-robot insertion tasks, PACE achieves an average success rate of <strong>90.7%</strong>, outperforming vision-only and visuotactile fusion baselines by over 44 percentage points; on the ManipulationNet benchmark, PACE maintains <strong>88.7%</strong> success across six geometry-clearance configurations, including an industrial-grade 0.1-mm clearance. Ablations confirm the complementary contributions of the three temporal roles, mechanistic analyses show that PACE separates normal insertion progress from contact events requiring immediate correction, and cross-signal and cross-architecture experiments indicate that this temporal-role principle extends across different physical feedback signals and policy backbones. Code, models, and datasets will be released.
+    </p>
+  </div>
+</section>
+
+<!-- ============ METHOD OVERVIEW ============ -->
+<section>
+  <div class="container">
+    <h2>Method Overview</h2>
+
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      PACE assigns the same tactile stream to three temporal roles: contact-state conditioning modulates encoder features at query time; contact-event correction corrects the generated chunk; and contact-consequence prediction supervises decoder hidden states during training.
+    </p>
+
+    <div class="method-fig">
+      <img src="static/images/architecture.png" alt="PACE Architecture" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATA COLLECTION ============ -->
+<section>
+  <div class="container">
+    <h2>Data Collection System</h2>
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      We built a custom force-feedback teleoperation system around the Force Dimension sigma.7 haptic device that renders calibrated contact wrench to the operator in real time, producing demonstrations with natural contact-responsive behaviors (collision retreat, search adjustment, stable insertion). Each task has about 160 demonstrations of roughly 300 steps.
+    </p>
+
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">
+      Demonstrations are collected via sigma.7 force-feedback teleoperation. Both videos in each row show the same episode: left is the robot execution, right is the time-synchronized data stream. These videos are played at 1x speed.
+    </p>
+
+    <!-- Column headers -->
+    <div class="video-grid" style="margin-bottom:4px;">
+      <p style="text-align:center; font-size:13px; font-weight:600; color:var(--text); margin:0;">Operator teleoperates 2-pin insertion via sigma.7</p>
+      <p style="text-align:center; font-size:13px; font-weight:600; color:var(--text); margin:0;">Time-synchronized multimodal data stream</p>
+    </div>
+
+    <!-- Episode 1 -->
+    <div class="video-grid" style="margin-bottom:16px;">
+      <div class="video-card">
+        <video id="teleop-ep1" muted playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/data_collection_system/teleop_ep1.mp4" type="video/mp4"></video>
+        <div class="caption">Episode 1</div>
+      </div>
+      <div class="video-card">
+        <video id="stream-ep1" muted playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/data_collection_system/stream_ep1.mp4" type="video/mp4"></video>
+        <div class="caption">Episode 1</div>
+      </div>
+    </div>
+
+    <!-- Episode 2 -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video id="teleop-ep2" muted playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/data_collection_system/teleop_ep2.mp4" type="video/mp4"></video>
+        <div class="caption">Episode 2</div>
+      </div>
+      <div class="video-card">
+        <video id="stream-ep2" muted playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/data_collection_system/stream_ep2.mp4" type="video/mp4"></video>
+        <div class="caption">Episode 2</div>
+      </div>
+    </div>
+
+    <script>
+      // Sync playback: wait for both videos to be fully ready, then start together.
+      // On loop restart, re-sync to prevent drift.
+      function syncPair(id1, id2) {
+        var v1 = document.getElementById(id1);
+        var v2 = document.getElementById(id2);
+        if (!v1 || !v2) return;
+
+        function startTogether() {
+          v1.currentTime = 0;
+          v2.currentTime = 0;
+          v1.play();
+          v2.play();
+        }
+
+        // Wait until both can play through without buffering
+        Promise.all([
+          new Promise(function(r) { v1.oncanplaythrough = r; if (v1.readyState >= 4) r(); }),
+          new Promise(function(r) { v2.oncanplaythrough = r; if (v2.readyState >= 4) r(); })
+        ]).then(startTogether);
+
+        // Re-sync on loop: when either ends, restart both
+        v1.addEventListener('ended', function() { v1.pause(); v2.pause(); startTogether(); });
+        v2.addEventListener('ended', function() { v1.pause(); v2.pause(); startTogether(); });
+      }
+      syncPair('teleop-ep1', 'stream-ep1');
+      syncPair('teleop-ep2', 'stream-ep2');
+    </script>
+  </div>
+</section>
+
+<!-- ============ REAL INSERTION TASKS ============ -->
+<section>
+  <div class="container">
+    <h2>PACE for Real Insertion Tasks</h2>
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      Five real insertion tasks covering orientation constraints, hidden pins, multi-point contact, small-clearance sensitivity, and sustained-force insertion.
+    </p>
+
+    <!-- Row 1: 2 videos -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/real_insertion_tasks/key_insertion.mp4" type="video/mp4"></video>
+        <div class="caption">Key Insertion — non-axisymmetric orientation constraint</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/real_insertion_tasks/two_pin_plug.mp4" type="video/mp4"></video>
+        <div class="caption">Two-Pin Plug — dual-pin constraint, visually invisible pins</div>
+      </div>
+    </div>
+
+    <!-- Row 2: 2 videos -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/real_insertion_tasks/three_pin_plug.mp4" type="video/mp4"></video>
+        <div class="caption">Three-Pin Plug — three-point geometric constraint</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/real_insertion_tasks/usb_insertion.mp4" type="video/mp4"></video>
+        <div class="caption">USB Insertion — small clearance, high pose sensitivity</div>
+      </div>
+    </div>
+
+    <!-- Row 3: 1 video (centered) -->
+    <div class="video-grid single">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/real_insertion_tasks/ethernet_insertion.mp4" type="video/mp4"></video>
+        <div class="caption">Ethernet Insertion — elastic latch, sustained contact force</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANIPULATIONNET BENCHMARK ============ -->
+<section>
+  <div class="container">
+    <h2>PACE for ManipulationNet Benchmark</h2>
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      NIST Assembly Task Board (ATB) peg-in-hole benchmark from ManipulationNet: standardized stainless-steel cylindrical and hexagonal pegs with manufacturing tolerance below 20 &mu;m, paired with corresponding holes at three clearance levels (3 mm, 1 mm, 0.1 mm), yielding six geometry&ndash;clearance configurations. PACE achieves 88.7% average success across all six configurations, including industrial-grade 0.1 mm clearance.
+    </p>
+
+    <!-- Row 1: 3 mm clearance -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_cylinder_3mm.mp4" type="video/mp4"></video>
+        <div class="caption">Cylindrical Peg &mdash; 3 mm clearance</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_hexagon_3mm.mp4" type="video/mp4"></video>
+        <div class="caption">Hexagonal Peg &mdash; 3 mm clearance</div>
+      </div>
+    </div>
+
+    <!-- Row 2: 1 mm clearance -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_cylinder_1mm.mp4" type="video/mp4"></video>
+        <div class="caption">Cylindrical Peg &mdash; 1 mm clearance</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_hexagon_1mm.mp4" type="video/mp4"></video>
+        <div class="caption">Hexagonal Peg &mdash; 1 mm clearance</div>
+      </div>
+    </div>
+
+    <!-- Row 3: 0.1 mm clearance -->
+    <div class="video-grid">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_cylinder_01mm.mp4" type="video/mp4"></video>
+        <div class="caption">Cylindrical Peg &mdash; 0.1 mm clearance</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/manipulation_benchmark/mn_hexagon_01mm.mp4" type="video/mp4"></video>
+        <div class="caption">Hexagonal Peg &mdash; 0.1 mm clearance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CROSS SIGNAL SOURCE ============ -->
+<section>
+  <div class="container">
+    <h2>Cross Signal Source</h2>
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      This experiment tests cross-signal generality by replacing the default GF225 tactile-force signal with end-effector six-axis force/torque or joint currents, and evaluating on 2-pin and Key. Both alternatives remain close to the tactile default (93.3%), reaching 90.0% and 88.3%, indicating that PACE is not limited to the default tactile sensor. The videos below show representative 2-pin rollouts at three different target positions tested in sequence.
+    </p>
+
+    <!-- Column headers (aligned with 4-col grid: auto + 1fr 1fr 1fr) -->
+    <div style="display:grid; grid-template-columns: auto 1fr 1fr 1fr; gap:16px; margin-bottom:4px;">
+      <span></span>
+      <p style="text-align:center; font-size:13px; font-weight:600; color:var(--text); margin:0;">Tactile (GF225)</p>
+      <p style="text-align:center; font-size:13px; font-weight:600; color:var(--text); margin:0;">EEF Force/Torque</p>
+      <p style="text-align:center; font-size:13px; font-weight:600; color:var(--text); margin:0;">Joint Current</p>
+    </div>
+
+    <!-- Trial 1 -->
+    <div style="display:grid; grid-template-columns: auto 1fr 1fr 1fr; gap:16px; align-items:center; margin-bottom:16px;">
+      <span style="font-size:12px; font-weight:600; color:var(--text-dim); writing-mode:horizontal-tb; white-space:nowrap;">Trial 1</span>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t1_tactile.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t1_eef_ft.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t1_joint.mp4" type="video/mp4"></video>
+      </div>
+    </div>
+
+    <!-- Trial 2 -->
+    <div style="display:grid; grid-template-columns: auto 1fr 1fr 1fr; gap:16px; align-items:center; margin-bottom:16px;">
+      <span style="font-size:12px; font-weight:600; color:var(--text-dim); writing-mode:horizontal-tb; white-space:nowrap;">Trial 2</span>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t2_tactile.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t2_eef_ft.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t2_joint.mp4" type="video/mp4"></video>
+      </div>
+    </div>
+
+    <!-- Trial 3 -->
+    <div style="display:grid; grid-template-columns: auto 1fr 1fr 1fr; gap:16px; align-items:center; margin-bottom:16px;">
+      <span style="font-size:12px; font-weight:600; color:var(--text-dim); writing-mode:horizontal-tb; white-space:nowrap;">Trial 3</span>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t3_tactile.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t3_eef_ft.mp4" type="video/mp4"></video>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_signal_source/cross_t3_joint.mp4" type="video/mp4"></video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CROSS ARCHITECTURE ============ -->
+<section>
+  <div class="container">
+    <h2>Cross Architecture</h2>
+    <p style="font-size:14px; color:var(--text-dim); margin-bottom:16px;">
+      To test cross-backbone generality, we integrate the same Phase/Event/Pred. roles into Diffusion Policy and evaluate on 2-pin and Key. DP+PACE reaches 88.3% average success, a 70.0 pp improvement over vanilla DP, indicating that PACE's temporal-role organization remains effective across different policy backbones. The videos below show representative 2-pin rollouts at three different target positions tested in sequence.
+    </p>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px;">
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_architecture/arch_t1_dp.mp4" type="video/mp4"></video>
+        <div class="caption">Trial 1</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_architecture/arch_t2_dp.mp4" type="video/mp4"></video>
+        <div class="caption">Trial 2</div>
+      </div>
+      <div class="video-card">
+        <video autoplay muted loop playsinline loading="lazy" controlsList="nodownload" oncontextmenu="return false;"><source src="static/videos/cross_architecture/arch_t3_dp.mp4" type="video/mp4"></video>
+        <div class="caption">Trial 3</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CITATION ============ -->
+<section>
+  <div class="container">
+    <h2>Citation</h2>
+    <p style="font-size:14px; color:var(--text-dim);">If you find this work useful, please cite:</p>
+    <div class="bibtex-block">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('bib').textContent)">Copy</button>
+<pre id="bib">@article{anonymous2026pace,
+  title   = {PACE: Temporal-Role Tactile Conditioning for Chunk-Based Insertion Policies},
+  author  = {Anonymous},
+  journal = {CoRL},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <p>Website template adapted from <a href="https://nerfies.github.io" target="_blank">Nerfies</a>. Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
