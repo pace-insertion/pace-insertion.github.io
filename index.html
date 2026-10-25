@@ -41,7 +41,8 @@
     .authors { font-size: 17px; margin-bottom: 7px; text-align: center; }
     .authors a { color: var(--text); text-decoration: none; }
     .authors a:hover { color: var(--blue); }
-    .affiliations { font-size: 15px; color: var(--text-dim); margin-bottom: 8px; text-align: center; }
+    .affiliations { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; color: var(--text-dim); margin-bottom: 8px; text-align: center; }
+    .affiliation-logo { display: block; width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
 
     /* BUTTONS */
     .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
@@ -121,7 +122,10 @@
     <p class="authors">
       Zhiyuan Chen, Shixiong Xu, Shuai Chen, Yangwei You
     </p>
-    <p class="affiliations">Xiaomi Robotics</p>
+    <p class="affiliations">
+      <img class="affiliation-logo" src="static/images/xiaomi-logo.png" alt="Xiaomi" width="30" height="30">
+      <span>Xiaomi Robotics</span>
+    </p>
 
     <div class="btn-row">
       <a class="btn" href="#" target="_blank">
